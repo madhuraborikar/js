@@ -1,0 +1,46 @@
+<button onclick="showData(1)"> Page 1</button>
+<button onclick="showData(2)"> Page 2</button>
+<table border="1">
+   
+    <thead>
+        <tr>
+            <th>Id:</th>
+            <th>Email:</th>
+            <th>first name:</th>
+            <th>last name:</th>
+            <th>avatar:</th>
+        </tr>
+    </thead>
+   <tbody id="records"></tbody>
+</table>
+<style>
+    img{
+        border-radius: 30px;
+    }
+</style>
+
+<script>
+    // ${}  embed expression
+    function showData(pageno){
+    url=`https://reqres.in/api/users?page=${pageno}`
+
+    fetch(url)
+    // => lamda exprssion
+    .then(res => res.json())
+    .then(result => {
+        console.table(result['data'])
+        output=``
+        for(let i=0;i<6;i++){
+            output +=`<tr>
+            <td>${result['data'][i]['id']}</td>
+            <td>${result['data'][i]['email']}</td>
+            <td>${result['data'][i]['first_name']}</td>
+            <td>${result['data'][i]['last_name']}</td>
+            <td><img src="${result['data'][i]['avatar']}"></td>
+            </tr>`
+        }
+        document.getElementById('records').innerHTML = output
+
+    })
+}
+</script>
